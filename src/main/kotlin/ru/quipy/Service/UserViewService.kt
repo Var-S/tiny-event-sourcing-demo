@@ -22,6 +22,16 @@ class UserViewService(
         )
     }
 
+    fun changeLogin(id: UUID, newLogin: String): UserViewDomain.User? {
+        val user = userRepository.findById(id).orElse(null)
+        return if (user != null) {
+            user.login = newLogin
+            userRepository.save(user)
+        } else {
+            null
+        }
+    }
+
     fun findById(userId: UUID): UserViewDomain.User? {
         return userRepository.findById(userId).orElse(null)
     }

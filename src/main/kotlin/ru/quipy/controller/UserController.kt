@@ -1,6 +1,7 @@
 package ru.quipy.controllers
 
 import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import ru.quipy.Dtos.UserCreateRequest
 import ru.quipy.Models.UserViewDomain
@@ -35,5 +36,15 @@ class UserController(
         )
         userViewService.saveUser(event)
         return UserViewDomain.User(event.id, event.login)
+    }
+
+    @PutMapping("/{id}/login")
+    fun changeLogin(@PathVariable id: UUID, @RequestBody newLogin: String): ResponseEntity<UserViewDomain.User> {
+        val updatedUser = userViewService.changeLogin(id, newLogin)
+        return if (updatedUser != null) {
+            ResponseEntity.ok(updatedUser)
+        } else {
+            ResponseEntity.notFound().build()
+        }
     }
 }
