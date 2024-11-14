@@ -9,6 +9,7 @@ const val STATUS_CHANGED_EVENT = "STATUS_CHANGED_EVENT"
 const val ASSIGN_USER_TO_TASK_EVENT = "ASSIGN_USER_TO_TASK_EVENT"
 const val DELETE_USER_FROM_TASK_EVENT = "DELETE_USER_FROM_TASK_EVENT"
 const val TASK_DELETED_EVENT = "TASK_DELETED_EVENT"
+const val TASK_UPDATED_EVENT = "TASK_UPDATED_EVENT"
 
 // API
 @DomainEvent(name = TASK_CREATE_EVENT)
@@ -22,6 +23,16 @@ class TaskCreateEvent(
     createdAt: Long = System.currentTimeMillis(),
 ) : Event<TaskAggregate>(
     name = TASK_CREATE_EVENT,
+    createdAt = createdAt,
+)
+
+@DomainEvent(name = TASK_UPDATED_EVENT)
+class TaskUpdatedEvent(
+    val taskId: UUID,
+    val newTitle: String,
+    createdAt: Long = System.currentTimeMillis(),
+) : Event<TaskAggregate>(
+    name = TASK_UPDATED_EVENT,
     createdAt = createdAt,
 )
 
