@@ -42,6 +42,12 @@ class ProjectAggregateState : AggregateState<UUID, ProjectAggregate> {
     fun updateTitle(title: String): ProjectUpdatedEvent {
         return ProjectUpdatedEvent(projectId, title)
     }
+
+    @StateTransitionFunc
+    fun updateTitleApply(event: ProjectUpdatedEvent) {
+        projectTitle = event.title
+        updatedAt = createdAt
+    }
 }
 
 data class TaskEntity(
