@@ -1,13 +1,10 @@
 package ru.quipy.controller
 
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
+import ru.quipy.Dtos.UserCreateRequest
 import ru.quipy.api.ProjectAggregate
 import ru.quipy.api.ProjectCreatedEvent
+import ru.quipy.api.ProjectUpdatedEvent
 import ru.quipy.api.TaskCreatedEvent
 import ru.quipy.core.EventSourcingService
 import ru.quipy.logic.ProjectAggregateState
@@ -31,10 +28,10 @@ class ProjectController(
         return projectEsService.getState(projectId)
     }
 
-    @PostMapping("/{projectId}/tasks/{taskName}")
-    fun createTask(@PathVariable projectId: UUID, @PathVariable taskName: String): TaskCreatedEvent {
-        return projectEsService.update(projectId) {
-            it.addTask(taskName)
+    @PutMapping("/{projectId}/title")
+    fun updateProject(@PathVariable projectId: UUID, @RequestBody title : String): ProjectUpdatedEvent {
+        return projectEsService.update(projectId) {projectState ->
+            projectState.updateTitle(title)
         }
     }
 }

@@ -5,9 +5,4 @@ import ru.quipy.domain.Aggregate
 import java.util.*
 
 @AggregateType(aggregateEventsTableName = "aggregate-user")
-class UserAggregate : Aggregate {
-
-    fun createUser(userId: UUID, login: String): UserCreatedEvent {
-        return UserCreatedEvent(userId, login)
-    }
-}
+class UserAggregate : Aggregate {}

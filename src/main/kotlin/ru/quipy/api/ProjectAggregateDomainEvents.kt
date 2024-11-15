@@ -8,6 +8,8 @@ const val PROJECT_CREATED_EVENT = "PROJECT_CREATED_EVENT"
 const val TAG_CREATED_EVENT = "TAG_CREATED_EVENT"
 const val TAG_ASSIGNED_TO_TASK_EVENT = "TAG_ASSIGNED_TO_TASK_EVENT"
 const val TASK_CREATED_EVENT = "TASK_CREATED_EVENT"
+const val PROJECT_UPDATED_EVENT = "PROJECT_UPDATED_EVENT"
+
 
 // API
 @DomainEvent(name = PROJECT_CREATED_EVENT)
@@ -51,5 +53,15 @@ class TagAssignedToTaskEvent(
     createdAt: Long = System.currentTimeMillis(),
 ) : Event<ProjectAggregate>(
     name = TAG_ASSIGNED_TO_TASK_EVENT,
+    createdAt = createdAt
+)
+
+@DomainEvent(name = PROJECT_UPDATED_EVENT)
+class ProjectUpdatedEvent(
+    val projectId: UUID,
+    val title: String,
+    createdAt: Long = System.currentTimeMillis(),
+) : Event<ProjectAggregate>(
+    name = PROJECT_UPDATED_EVENT,
     createdAt = createdAt
 )

@@ -5,6 +5,8 @@ import ru.quipy.domain.Event
 import java.util.*
 
 const val USER_CREATED_EVENT = "USER_CREATED_EVENT"
+const val USER_LOGIN_UPDATED_EVENT = "USER_LOGIN_UPDATED_EVENT"
+
 
 // API
 @DomainEvent(name = USER_CREATED_EVENT)
@@ -14,5 +16,15 @@ class UserCreatedEvent(
     createdAt: Long = System.currentTimeMillis(),
 ) : Event<UserAggregate>(
     name = USER_CREATED_EVENT,
+    createdAt = createdAt,
+)
+
+@DomainEvent(name = USER_LOGIN_UPDATED_EVENT)
+class UserLoginUpdatedEvent(
+    val userId: UUID,
+    val newLogin: String,
+    createdAt: Long = System.currentTimeMillis()
+) : Event<UserAggregate>(
+    name = USER_LOGIN_UPDATED_EVENT,
     createdAt = createdAt,
 )

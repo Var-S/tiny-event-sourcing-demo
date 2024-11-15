@@ -38,6 +38,10 @@ class ProjectAggregateState : AggregateState<UUID, ProjectAggregate> {
         tasks[event.taskId] = TaskEntity(event.taskId, event.taskName, mutableSetOf())
         updatedAt = createdAt
     }
+
+    fun updateTitle(title: String): ProjectUpdatedEvent {
+        return ProjectUpdatedEvent(projectId, title)
+    }
 }
 
 data class TaskEntity(
