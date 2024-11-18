@@ -1,17 +1,13 @@
 package ru.quipy.controller
 
 import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import ru.quipy.Dtos.TaskCreateRequest
-import ru.quipy.Models.TaskViewDomain
 import ru.quipy.api.TaskAggregate
 import ru.quipy.api.TaskCreateEvent
 import ru.quipy.api.TaskUpdatedEvent
-import ru.quipy.api.UserAggregate
 import ru.quipy.core.EventSourcingService
 import ru.quipy.logic.TaskAggregateState
-import ru.quipy.logic.UserAggregateState
 import ru.quipy.logic.create
 import ru.quipy.logic.updateTaskTitle
 import java.util.*

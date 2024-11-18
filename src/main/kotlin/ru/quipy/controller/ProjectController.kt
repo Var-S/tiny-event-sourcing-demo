@@ -19,8 +19,8 @@ class ProjectController(
 ) {
 
     @PostMapping("/{projectTitle}")
-    fun createProject(@PathVariable projectTitle: String, @RequestParam creatorId: String): ProjectCreatedEvent {
-        return projectEsService.create { it.create(UUID.randomUUID(), projectTitle, creatorId) }
+    fun createProject(@PathVariable projectTitle: String, @RequestParam creatorId: String, @PathVariable status: String): ProjectCreatedEvent {
+        return projectEsService.create { it.create(UUID.randomUUID(), projectTitle, creatorId, status) }
     }
 
     @GetMapping("/{projectId}")
@@ -29,9 +29,9 @@ class ProjectController(
     }
 
     @PutMapping("/{projectId}/title")
-    fun updateProject(@PathVariable projectId: UUID, @RequestBody title : String): ProjectUpdatedEvent {
+    fun updateProject(@PathVariable projectId: UUID, @RequestBody status : String): ProjectUpdatedEvent {
         return projectEsService.update(projectId) {projectState ->
-            projectState.updateTitle(title)
+            projectState.updateStatus(status)
         }
     }
 }

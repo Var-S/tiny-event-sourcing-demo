@@ -39,13 +39,13 @@ class ProjectAggregateState : AggregateState<UUID, ProjectAggregate> {
         updatedAt = createdAt
     }
 
-    fun updateTitle(title: String): ProjectUpdatedEvent {
-        return ProjectUpdatedEvent(projectId, title)
+    fun updateStatus(status: String): ProjectUpdatedEvent {
+        return ProjectUpdatedEvent(projectId, status)
     }
 
     @StateTransitionFunc
-    fun updateTitleApply(event: ProjectUpdatedEvent) {
-        projectTitle = event.title
+    fun updateStatusApply(event: ProjectUpdatedEvent) {
+        projectTitle = event.status
         updatedAt = createdAt
     }
 }
