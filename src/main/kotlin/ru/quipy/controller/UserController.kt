@@ -2,7 +2,7 @@ package ru.quipy.controllers
 
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
-import ru.quipy.Dtos.UserCreateRequest
+import ru.quipy.dto.UserCreateRequest
 import ru.quipy.api.UserAggregate
 import ru.quipy.api.UserCreatedEvent
 import ru.quipy.api.UserLoginUpdatedEvent

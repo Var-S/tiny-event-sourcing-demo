@@ -12,61 +12,94 @@ class ProjectAggregateState : AggregateState<UUID, ProjectAggregate> {
     var updatedAt: Long = System.currentTimeMillis()
 
     lateinit var projectTitle: String
-    lateinit var creatorId: String
+    var statuses = mutableListOf("CREATED")
+    var participantsIds = mutableSetOf<UUID>()
+
+
     var tasks = mutableMapOf<UUID, TaskEntity>()
-    var projectTags = mutableMapOf<UUID, TagEntity>()
 
     override fun getId() = projectId
 
-    // State transition functions which is represented by the class member function
     @StateTransitionFunc
     fun projectCreatedApply(event: ProjectCreatedEvent) {
         projectId = event.projectId
         projectTitle = event.title
-        creatorId = event.creatorId
-        updatedAt = createdAt
+        participantsIds.add(event.creatorId)
+        createdAt = event.createdAt
     }
 
     @StateTransitionFunc
-    fun tagCreatedApply(event: TagCreatedEvent) {
-        projectTags[event.tagId] = TagEntity(event.tagId, event.tagName)
-        updatedAt = createdAt
+    fun projectUpdatedApply(event: ProjectUpdatedEvent) {
+        projectTitle = event.title
+        updatedAt = event.createdAt
+    }
+
+    @StateTransitionFunc
+    fun participantAddedApply(event: ParticipantAddedEvent) {
+        participantsIds.add(event.participantId)
+        updatedAt = event.createdAt
+    }
+
+    @StateTransitionFunc
+    fun statusAddedApply(event: StatusAddedEvent) {
+        statuses.add(event.status)
+        updatedAt = event.createdAt
+    }
+
+    @StateTransitionFunc
+    fun statusDeletedApply(event: StatusDeletedEvent) {
+        statuses.removeIf{ it == event.deletedStatus }
+        updatedAt = event.createdAt
     }
 
     @StateTransitionFunc
     fun taskCreatedApply(event: TaskCreatedEvent) {
-        tasks[event.taskId] = TaskEntity(event.taskId, event.taskName, mutableSetOf())
-        updatedAt = createdAt
-    }
-
-    fun updateStatus(status: String): ProjectUpdatedEvent {
-        return ProjectUpdatedEvent(projectId, status)
+        tasks[event.taskId] = TaskEntity(
+            event.taskId,
+            event.taskName,
+            event.description,
+            "CREATED",
+            mutableSetOf(),
+        )
+        updatedAt = event.createdAt
     }
 
     @StateTransitionFunc
-    fun updateStatusApply(event: ProjectUpdatedEvent) {
-        projectTitle = event.status
-        updatedAt = createdAt
+    fun taskDeletedApply(event: TaskDeletedEvent) {
+        tasks.remove(event.taskId)
+        updatedAt = event.createdAt
+    }
+
+    @StateTransitionFunc
+    fun taskUpdatedApply(event: TaskUpdatedEvent) {
+        tasks[event.taskId]?.title = event.newTitle
+        tasks[event.taskId]?.description = event.newDescription
+        updatedAt = event.createdAt
+    }
+
+    @StateTransitionFunc
+    fun taskStatusChangedApply(event: TaskStatusChangedEvent) {
+        tasks[event.taskId]?.status = event.newStatus
+        updatedAt = event.createdAt
+    }
+
+    @StateTransitionFunc
+    fun taskPerformerAddedApply(event: TaskPerformerAddedEvent) {
+        tasks[event.taskId]?.performersIds?.add(event.performerId)
+        updatedAt = event.createdAt
+    }
+
+    @StateTransitionFunc
+    fun taskPerformerDeletedApply(event: TaskPerformerDeletedEvent) {
+        tasks[event.taskId]?.performersIds?.remove(event.performerId)
+        updatedAt = event.createdAt
     }
 }
 
-data class TaskEntity(
-    val id: UUID = UUID.randomUUID(),
-    val name: String,
-    val tagsAssigned: MutableSet<UUID>
+class TaskEntity(
+    var id: UUID,
+    var title: String,
+    var description: String,
+    var status: String,
+    var performersIds: MutableSet<UUID>,
 )
-
-data class TagEntity(
-    val id: UUID = UUID.randomUUID(),
-    val name: String
-)
-
-/**
- * Demonstrates that the transition functions might be representer by "extension" functions, not only class members functions
- */
-@StateTransitionFunc
-fun ProjectAggregateState.tagAssignedApply(event: TagAssignedToTaskEvent) {
-    tasks[event.taskId]?.tagsAssigned?.add(event.tagId)
-        ?: throw IllegalArgumentException("No such task: ${event.taskId}")
-    updatedAt = createdAt
-}
