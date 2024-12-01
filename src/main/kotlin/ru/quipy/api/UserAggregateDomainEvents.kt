@@ -19,12 +19,12 @@ class UserCreatedEvent(
     createdAt = createdAt,
 )
 
-@DomainEvent(name = USER_LOGIN_UPDATED_EVENT)
-class UserLoginUpdatedEvent(
+@DomainEvent(name = USER_UPDATED_EVENT)
+class UserUpdatedEvent(
     val userId: UUID,
     val newLogin: String,
     createdAt: Long = System.currentTimeMillis()
 ) : Event<UserAggregate>(
-    name = USER_LOGIN_UPDATED_EVENT,
+    name = USER_UPDATED_EVENT,
     createdAt = createdAt,
 )

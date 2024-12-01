@@ -8,14 +8,12 @@ import java.util.*
 // Service's business logic
 class ProjectAggregateState : AggregateState<UUID, ProjectAggregate> {
     private lateinit var projectId: UUID
-    var createdAt: Long = System.currentTimeMillis()
-    var updatedAt: Long = System.currentTimeMillis()
+    private var createdAt: Long = System.currentTimeMillis()
+    private var updatedAt: Long = System.currentTimeMillis()
 
-    lateinit var projectTitle: String
+    private lateinit var projectTitle: String
     var statuses = mutableListOf("CREATED")
     var participantsIds = mutableSetOf<UUID>()
-
-
     var tasks = mutableMapOf<UUID, TaskEntity>()
 
     override fun getId() = projectId

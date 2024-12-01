@@ -1,11 +1,19 @@
 package ru.quipy.logic
 
 import ru.quipy.api.UserCreatedEvent
+import ru.quipy.api.UserUpdatedEvent
 import java.util.*
 
-fun UserAggregateState.create(id: UUID, userLogin: String): UserCreatedEvent {
+fun UserAggregateState.create(userLogin: String): UserCreatedEvent {
     return UserCreatedEvent(
-        userId = id,
+        userId = UUID.randomUUID(),
         login = userLogin
+    )
+}
+
+fun UserAggregateState.update(newLogin: String): UserUpdatedEvent {
+    return UserUpdatedEvent(
+        userId = getId(),
+        newLogin = newLogin
     )
 }
