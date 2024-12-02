@@ -8,22 +8,22 @@ import javax.persistence.*
 data class TaskEntity(
     @Id
     @Column(name = "id", nullable = false, updatable = false)
-    val id: UUID = UUID.randomUUID(),
+    var id: UUID = UUID.randomUUID(),
 
     @Column(name = "project_id", nullable = false)
-    val projectId: UUID = UUID.randomUUID(),
+    var projectId: UUID = UUID.randomUUID(),
 
     @Column(name = "title", nullable = false)
-    val title: String = "",
+    var title: String = "",
 
     @Column(name = "status", nullable = false)
-    val status: String = "",
+    var status: String = "",
 
     @Column(name = "description", nullable = false, columnDefinition = "TEXT")
-    val description: String = "",
+    var description: String = "",
 
     @ElementCollection
     @CollectionTable(name = "task_performers", joinColumns = [JoinColumn(name = "task_id")])
     @Column(name = "performer_id")
-    val performersIds: List<UUID> = listOf()
+    var performersIds: MutableList<UUID> = mutableListOf()
 )

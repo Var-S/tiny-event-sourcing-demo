@@ -8,8 +8,8 @@ import javax.persistence.*
 data class UserEntity(
     @Id
     @Column(name = "id", nullable = false, updatable = false)
-    val id: UUID = UUID.randomUUID(),
+    var id: UUID = UUID.randomUUID(),
 
-    @Column(name = "title", nullable = false)
-    val name: String = "",
+    @Column(name = "login", nullable = false)
+    var login: String = "",
 )

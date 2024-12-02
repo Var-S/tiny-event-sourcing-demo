@@ -8,18 +8,18 @@ import javax.persistence.*
 data class ProjectEntity(
     @Id
     @Column(name = "id", nullable = false, updatable = false)
-    val id: UUID = UUID.randomUUID(),
+    var id: UUID = UUID.randomUUID(),
 
     @Column(name = "title", nullable = false)
-    val title: String = "",
+    var title: String = "",
 
     @ElementCollection
     @CollectionTable(name = "project_statuses", joinColumns = [JoinColumn(name = "project_id")])
     @Column(name = "status")
-    val statuses: List<String> = listOf(),
+    var statuses: MutableList<String> = mutableListOf(),
 
     @ElementCollection
     @CollectionTable(name = "project_participants", joinColumns = [JoinColumn(name = "project_id")])
     @Column(name = "participant_id")
-    val participants: List<UUID> = listOf()
+    var participants: MutableList<UUID> = mutableListOf()
 )
