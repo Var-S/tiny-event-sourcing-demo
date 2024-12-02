@@ -5,7 +5,7 @@ import ru.quipy.domain.Event
 import java.util.*
 
 const val USER_CREATED_EVENT = "USER_CREATED_EVENT"
-const val USER_LOGIN_UPDATED_EVENT = "USER_LOGIN_UPDATED_EVENT"
+const val USER_UPDATED_EVENT = "USER_UPDATED_EVENT"
 
 
 // API
