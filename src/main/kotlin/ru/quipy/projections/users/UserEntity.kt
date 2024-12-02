@@ -1,12 +1,15 @@
 package ru.quipy.projections.users
 
 import java.util.*
-import javax.persistence.Entity
-import javax.persistence.Id
+import javax.persistence.*
 
 @Entity
+@Table(name = "users")
 data class UserEntity(
     @Id
+    @Column(name = "id", nullable = false, updatable = false)
     val id: UUID = UUID.randomUUID(),
-    val login: String = "",
+
+    @Column(name = "title", nullable = false)
+    val name: String = "",
 )
