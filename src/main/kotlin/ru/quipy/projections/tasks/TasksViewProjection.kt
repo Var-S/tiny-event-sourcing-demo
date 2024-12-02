@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import ru.quipy.api.*
 import ru.quipy.streams.AggregateSubscriptionsManager
+import java.util.*
 import javax.annotation.PostConstruct
 
 @Service
@@ -54,5 +55,14 @@ class TasksViewProjection {
                 taskRepository.save(task)
             }
         }
+    }
+
+    fun getTaskById(id: UUID) : TaskEntity {
+        return taskRepository.getReferenceById(id)
+    }
+
+    fun getTasksByProjectId(projectId: UUID): List<TaskEntity> {
+        val tasks = taskRepository.findAll()
+        return tasks.filter { it.projectId == projectId }
     }
 }

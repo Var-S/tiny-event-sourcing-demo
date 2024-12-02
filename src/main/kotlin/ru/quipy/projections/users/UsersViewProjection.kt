@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service
 import ru.quipy.api.*
 import ru.quipy.projections.tasks.TaskEntity
 import ru.quipy.streams.AggregateSubscriptionsManager
+import java.util.*
 import javax.annotation.PostConstruct
 
 @Service
@@ -31,5 +32,9 @@ class UsersViewProjection {
                 userRepository.save(user)
             }
         }
+    }
+
+    fun findUserById(userId: UUID) : Optional<UserEntity> {
+        return userRepository.findById(userId)
     }
 }

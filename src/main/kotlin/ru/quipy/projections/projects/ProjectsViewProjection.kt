@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import ru.quipy.api.*
 import ru.quipy.streams.AggregateSubscriptionsManager
+import java.util.*
 import javax.annotation.PostConstruct
 
 @Service
@@ -48,5 +49,14 @@ class ProjectsViewProjection {
                 projectRepository.save(project)
             }
         }
+    }
+
+    fun getProjectById(projectId: UUID): ProjectEntity {
+        return projectRepository.getReferenceById(projectId)
+    }
+
+    fun getUsersProjects(userId: UUID) : List<ProjectEntity> {
+        val projects = projectRepository.findAll()
+        return projects.filter { it.participants.contains(userId) }
     }
 }
