@@ -18,7 +18,7 @@ import java.util.*
 @RestController
 @RequestMapping("/api/users")
 class UserController(
-    private val userEsService: EventSourcingService<UUID, UserAggregate, UserAggregateState>
+    private val userEsService: EventSourcingService<UUID, UserAggregate, UserAggregateState>,
     val usersProjection: UsersViewProjection,
 ) {
     @PostMapping
