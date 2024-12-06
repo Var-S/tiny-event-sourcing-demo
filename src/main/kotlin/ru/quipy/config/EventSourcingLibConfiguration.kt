@@ -42,8 +42,8 @@ class EventSourcingLibConfiguration {
     @Autowired
     private lateinit var subscriptionsManager: AggregateSubscriptionsManager
 
-    @Autowired
-    private lateinit var projectEventSubscriber: AnnotationBasedProjectEventsSubscriber
+   // @Autowired
+   // private lateinit var projectEventSubscriber: AnnotationBasedProjectEventsSubscriber
 
     @Autowired
     private lateinit var eventSourcingServiceFactory: EventSourcingServiceFactory
@@ -63,7 +63,7 @@ class EventSourcingLibConfiguration {
     @PostConstruct
     fun init() {
         // Demonstrates how to explicitly subscribe the instance of annotation based subscriber to some stream. See the [AggregateSubscriptionsManager]
-        subscriptionsManager.subscribe<ProjectAggregate>(projectEventSubscriber)
+       // subscriptionsManager.subscribe<ProjectAggregate>(projectEventSubscriber)
 
         // Demonstrates how you can set up the listeners to the event stream
         eventStreamManager.maintenance {

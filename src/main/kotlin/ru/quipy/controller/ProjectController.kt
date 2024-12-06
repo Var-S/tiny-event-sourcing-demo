@@ -105,7 +105,7 @@ class ProjectController(
         }
     }
 
-    @PutMapping("/add-task-performer")
+    @DeleteMapping("/delete-task-performer")
     fun deletedTaskPerformer(@RequestBody request: DeleteTaskPerformerRequest): TaskPerformerDeletedEvent {
         return projectEsService.update(request.projectId) {
             it.deleteTaskPerformer(userId = request.userId, taskId = request.taskId, performerId = request.performerId)
