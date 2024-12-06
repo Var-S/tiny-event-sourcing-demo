@@ -44,4 +44,15 @@ class UserController(
             login = user.login,
         )
     }
+
+    @GetMapping
+    fun getAll(): List<UserResponse> {
+        val users = usersProjection.getAllUsers()
+        return users.map {
+            UserResponse(
+                id = it.id,
+                login = it.login,
+            )
+        }
+    }
 }

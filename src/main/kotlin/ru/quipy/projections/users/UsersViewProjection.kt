@@ -41,4 +41,8 @@ class UsersViewProjection {
     fun getUserById(userId: UUID) : UserEntity {
         return userRepository.getReferenceById(userId)
     }
+
+    fun getAllUsers() : List<UserEntity> {
+        return userRepository.findAll()
+    }
 }
