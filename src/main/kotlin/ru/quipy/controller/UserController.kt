@@ -36,8 +36,8 @@ class UserController(
         }
     }
 
-    @GetMapping
-    fun getById(id: UUID): UserResponse {
+    @GetMapping("/{id}")
+    fun getById(@PathVariable id: UUID): UserResponse {
         val user = usersProjection.getUserById(id)
         return UserResponse(
             id = user.id,
